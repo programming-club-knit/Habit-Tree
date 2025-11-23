@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Habit Tree - Fruits Version</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1 class="title">Habit Tree 🍎 Fruits Version</h1>
+
+  <div class="container">
+
+    <div class="panel left">
+      <h2>Your Habits</h2>
+
+
+      <div id="scoreTile" class="score-tile">
+        <h3>⭐ Score</h3>
+        <p id="scoreText">Completed</p> 
+      </div>
+
+      <form id="habitForm">
+        <input type="text" id="habitName" placeholder="Enter habit..." />
+        <button type="submit">Add</button>
+      </form>
+
+      <div id="habitList"></div>
+    </div>
+
+    <div class="panel center">
+      <h2>Your Tree</h2>
+
+      <div class="tree-area">
+        <img src="tree.png" id="treeImg">
+        <div id="fruitContainer"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

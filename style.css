@@ -1,0 +1,63 @@
+body {
+  background: #d4ffd4;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 25px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.panel {
+  background: white;
+  padding: 20px;
+  width: 360px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.score-tile {
+  background: lightgreen;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.habit-item {
+  background: #f0f0f0;
+  padding: 10px;
+  margin-top: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tree-area {
+  position: relative;
+}
+
+#treeImg {
+  width: 280px;
+}
+
+#fruitContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 280px;
+}
+
+.fruit {
+  width: 32px;
+  position: absolute;
+}
