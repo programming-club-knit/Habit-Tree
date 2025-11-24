@@ -1,5 +1,5 @@
 let habits = [];
-
+let cnt=0;
 
 function getRandomPosition() {
   return {
@@ -10,7 +10,6 @@ function getRandomPosition() {
 
 function updateScore() {
   const box = document.getElementById("score");
-
 }
 
 function renderHabits() {
@@ -27,7 +26,15 @@ function renderHabits() {
 
 
     checkbox.onclick = () => {
-      addFruit(index);
+      if(checkbox.checked){
+        cnt++;
+      }
+
+      else{
+        cnt--;
+      }
+
+      addFruit(index,checkbox.checked);
       updateScore();
     };
 
@@ -38,12 +45,42 @@ function renderHabits() {
   });
 }
 
+let m=0;
 
-function addFruit(index) {
-  const fruit = document.createElement("img");
-  fruit.src = "apple.webp";
-  fruit.className = "fruit";
-  fruit.id = "fruit-" + index;
+function addFruit(index,v) {
+  let percent = (cnt/habits.length)*100;
+
+  let fruit;
+
+  if(percent<=50){
+    if(m==1){
+      const e=document.querySelectorAll(".fruit")
+      e.forEach((img)=>img.src="apple.webp")
+      m=1;
+    }
+
+    if(v==1){
+      fruit = document.createElement("img");
+    fruit.src = "apple.webp";
+    fruit.className = "fruit";
+    fruit.id = "fruit-" + index;
+    }
+  }
+
+  else{
+    if(m==0){
+      const e=document.querySelectorAll(".fruit")
+      e.forEach((img)=>img.src="mango.jpeg")
+      m=0;
+    }
+
+    if(v==1){
+      fruit = document.createElement("img");
+    fruit.src = "mango.jpeg";
+    fruit.className = "fruit";
+    fruit.id = "fruit-" + index;
+    }
+  }
 
   const pos = getRandomPosition();
   fruit.style.left = pos.x + "px";
@@ -72,6 +109,8 @@ document.getElementById("habitForm").onsubmit = (e) => {
   habits.push(name);
   document.getElementById("habitName").value = "";
   renderHabits();
+  cnt=0;
+  document.getElementById("fruitContainer").innerHTML="";
 };
 
 renderHabits();
