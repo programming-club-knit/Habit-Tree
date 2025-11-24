@@ -56,7 +56,7 @@ function addFruit(index,v) {
     if(m==1){
       const e=document.querySelectorAll(".fruit")
       e.forEach((img)=>img.src="apple.webp")
-      m=1;
+      m=0;
     }
 
     if(v==1){
@@ -71,7 +71,7 @@ function addFruit(index,v) {
     if(m==0){
       const e=document.querySelectorAll(".fruit")
       e.forEach((img)=>img.src="mango.jpeg")
-      m=0;
+      m=1;
     }
 
     if(v==1){
