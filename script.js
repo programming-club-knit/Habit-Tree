@@ -1,4 +1,6 @@
 let habits = [];
+let count=localStorage.getItem("habitScore")? parseInt(localStorage.getItem("habitScore")) : 0;
+updateScore();
 
 
 function getRandomPosition() {
@@ -7,18 +9,30 @@ function getRandomPosition() {
     y: Math.floor(Math.random() * 260)
   };
 }
-
 function updateScore() {
-  const box = document.getElementById("score");
+  const box = document.getElementById("scoreText");
+  localStorage.setItem("habitScore", count);
+  const habitscore = localStorage.getItem("habitScore");
+  if (!habitscore) {
+    box.innerText = 0;
+    return;
+  }
+  box.innerText = habitscore;
+
+
 
 }
+
 
 function renderHabits() {
   const list = document.getElementById("habitList");
   list.innerHTML = "";
 
+
+
+
   habits.forEach((habit, index) => {
-    const item = document.createElement("div");
+      const item = document.createElement("div");
     item.className = "habit-item";
 
     const label = document.createElement("label");
@@ -26,17 +40,30 @@ function renderHabits() {
     checkbox.type = "checkbox";
 
 
-    checkbox.onclick = () => {
+
+
+    checkbox.onclick = (e) => {
+      if (e.target.checked) count++;
+      else count--;
       addFruit(index);
-      updateScore();
+      updateScore(count);
     };
 
-    label.appendChild(checkbox);
+
+    
+
+        label.appendChild(checkbox);
+  
     label.appendChild(document.createTextNode(" " + habit));
     item.appendChild(label);
     list.appendChild(item);
+
+  
+
+
   });
 }
+
 
 
 function addFruit(index) {
@@ -64,8 +91,8 @@ function toggleFruit(index, checked) {
   else removeFruit(index);
 }
 
-document.getElementById("habitForm").onsubmit = (e) => {
-  e.preventDefault();
+document.getElementById("habitForm").onsubmit = (event) => {
+  event.preventDefault();
   const name = document.getElementById("habitName").value.trim();
   if (!name) return;
 
