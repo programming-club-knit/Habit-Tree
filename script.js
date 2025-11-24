@@ -27,7 +27,7 @@ function renderHabits() {
 
 
     checkbox.onclick = () => {
-      addFruit(index);
+      toggleFruit(index, checkbox.checked);
       updateScore();
     };
 
@@ -54,8 +54,8 @@ function addFruit(index) {
 
 
 function removeFruit(index) {
-  const wrong = document.getElementById("fruitBox-" + index); 
-  if (wrong) wrong.innerHTML = ""; 
+  const wrong = document.getElementById("fruit-" + index); 
+  if (wrong) wrong.remove(); 
 }
 
 
