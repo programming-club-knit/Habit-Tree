@@ -1,68 +1,60 @@
 let habits = [];
-let count=localStorage.getItem("habitScore")? parseInt(localStorage.getItem("habitScore")) : 0;
+let habitStates = {}; // ✅ stores checkbox status per habit index
+
+let count = localStorage.getItem("habitScore")
+  ? parseInt(localStorage.getItem("habitScore"))
+  : 0;
+
 updateScore();
 
-
+// -------------------- Random Fruit Position --------------------
 function getRandomPosition() {
   return {
     x: Math.floor(Math.random() * 260),
     y: Math.floor(Math.random() * 260)
   };
 }
+
+// -------------------- Score Update --------------------
 function updateScore() {
   const box = document.getElementById("scoreText");
   localStorage.setItem("habitScore", count);
-  const habitscore = localStorage.getItem("habitScore");
-  if (!habitscore) {
-    box.innerText = 0;
-    return;
-  }
-  box.innerText = habitscore;
-
-
-
+  box.innerText = count;
 }
 
-
+// -------------------- Render Habits --------------------
 function renderHabits() {
   const list = document.getElementById("habitList");
   list.innerHTML = "";
 
-
-
-
   habits.forEach((habit, index) => {
-      const item = document.createElement("div");
+    const item = document.createElement("div");
     item.className = "habit-item";
 
     const label = document.createElement("label");
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
 
+    // ✅ Restore saved state
+    checkbox.checked = habitStates[index] === true;
 
     checkbox.onclick = () => {
+      habitStates[index] = checkbox.checked; // save state
       toggleFruit(index, checkbox.checked);
-      updateScore();
     };
 
-
-    
-
-        label.appendChild(checkbox);
-  
+    label.appendChild(checkbox);
     label.appendChild(document.createTextNode(" " + habit));
     item.appendChild(label);
     list.appendChild(item);
-
-  
-
-
   });
 }
 
-
-
+// -------------------- Fruit Functions --------------------
 function addFruit(index) {
+  // ❌ Prevent duplicate fruit
+  if (document.getElementById("fruit-" + index)) return;
+
   const fruit = document.createElement("img");
   fruit.src = "apple.webp";
   fruit.className = "fruit";
@@ -75,33 +67,36 @@ function addFruit(index) {
   document.getElementById("fruitContainer").appendChild(fruit);
 }
 
-
 function removeFruit(index) {
-  const wrong = document.getElementById("fruit-" + index); 
-  if (wrong) wrong.remove(); 
+  const fruit = document.getElementById("fruit-" + index);
+  if (fruit) fruit.remove();
 }
 
-
+// -------------------- Toggle Fruit --------------------
 function toggleFruit(index, checked) {
   if (checked) addFruit(index);
   else removeFruit(index);
 }
 
+// -------------------- Add Habit --------------------
 document.getElementById("habitForm").onsubmit = (event) => {
   event.preventDefault();
   const name = document.getElementById("habitName").value.trim();
   if (!name) return;
 
   habits.push(name);
+  habitStates[habits.length - 1] = false; // new habit default unchecked
+
   document.getElementById("habitName").value = "";
   renderHabits();
 };
 
+// -------------------- Reset --------------------
 document.getElementById("resetBtn").onclick = () => {
   habits = [];
+  habitStates = {};
   document.getElementById("fruitContainer").innerHTML = "";
   renderHabits();
 };
 
 renderHabits();
-
