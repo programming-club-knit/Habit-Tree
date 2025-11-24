@@ -1,6 +1,4 @@
 let habits = [];
-let count=localStorage.getItem("habitScore")? parseInt(localStorage.getItem("habitScore")) : 0;
-updateScore();
 
 
 function getRandomPosition() {
@@ -9,57 +7,50 @@ function getRandomPosition() {
     y: Math.floor(Math.random() * 260)
   };
 }
+let count=0;
 function updateScore() {
-  const box = document.getElementById("scoreText");
-  localStorage.setItem("habitScore", count);
-  const habitscore = localStorage.getItem("habitScore");
-  if (!habitscore) {
-    box.innerText = 0;
-    return;
-  }
-  box.innerText = habitscore;
-
-
-
+  const box = document.getElementById("scrp");
+    count++;
+    console.log(count);
+    
+    box.textContent = `⭐ Score: ${count}`;
 }
-
-
+function deScore() {
+  const box = document.getElementById("scrp");
+    count--;
+    console.log(count);
+    
+    box.textContent = `⭐ Score: ${count}`;
+}
 function renderHabits() {
   const list = document.getElementById("habitList");
   list.innerHTML = "";
 
-
-
-
   habits.forEach((habit, index) => {
-      const item = document.createElement("div");
+    const item = document.createElement("div");
     item.className = "habit-item";
 
     const label = document.createElement("label");
     const checkbox = document.createElement("input");
+    checkbox.id="chk";
     checkbox.type = "checkbox";
 
 
     checkbox.onclick = () => {
-      toggleFruit(index, checkbox.checked);
-      updateScore();
+     if(checkbox.checked==true) {addFruit(index);
+      updateScore();}
+      else {removeFruit(index);
+      deScore();
+    
+    }
     };
 
-
-    
-
-        label.appendChild(checkbox);
-  
+    label.appendChild(checkbox);
     label.appendChild(document.createTextNode(" " + habit));
     item.appendChild(label);
     list.appendChild(item);
-
-  
-
-
   });
 }
-
 
 
 function addFruit(index) {
@@ -78,7 +69,7 @@ function addFruit(index) {
 
 function removeFruit(index) {
   const wrong = document.getElementById("fruit-" + index); 
-  if (wrong) wrong.remove(); 
+   wrong.remove(); 
 }
 
 
@@ -87,8 +78,8 @@ function toggleFruit(index, checked) {
   else removeFruit(index);
 }
 
-document.getElementById("habitForm").onsubmit = (event) => {
-  event.preventDefault();
+document.getElementById("habitForm").onsubmit = (e) => {
+  e.preventDefault();
   const name = document.getElementById("habitName").value.trim();
   if (!name) return;
 
@@ -96,12 +87,14 @@ document.getElementById("habitForm").onsubmit = (event) => {
   document.getElementById("habitName").value = "";
   renderHabits();
 };
-
-document.getElementById("resetBtn").onclick = () => {
-  habits = [];
-  document.getElementById("fruitContainer").innerHTML = "";
-  renderHabits();
-};
-
+let re=document.getElementById("res")
+re.addEventListener('click',()=>{
+    document.getElementById("fruitContainer").innerHTML="";
+    const ch=document.getElementById("chk")
+    ch.checked=false;
+    count=0;
+    const box = document.getElementById("scrp");
+    box.textContent = `⭐ Score: ${count}`;
+    
+})
 renderHabits();
-
