@@ -74,5 +74,11 @@ document.getElementById("habitForm").onsubmit = (e) => {
   renderHabits();
 };
 
+document.getElementById("resetBtn").onclick = () => {
+  habits = [];
+  document.getElementById("fruitContainer").innerHTML = "";
+  renderHabits();
+};
+
 renderHabits();
 
