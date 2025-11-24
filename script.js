@@ -40,13 +40,9 @@ function renderHabits() {
     checkbox.type = "checkbox";
 
 
-
-
-    checkbox.onclick = (e) => {
-      if (e.target.checked) count++;
-      else count--;
-      addFruit(index);
-      updateScore(count);
+    checkbox.onclick = () => {
+      toggleFruit(index, checkbox.checked);
+      updateScore();
     };
 
 
@@ -81,8 +77,8 @@ function addFruit(index) {
 
 
 function removeFruit(index) {
-  const wrong = document.getElementById("fruitBox-" + index); 
-  if (wrong) wrong.innerHTML = ""; 
+  const wrong = document.getElementById("fruit-" + index); 
+  if (wrong) wrong.remove(); 
 }
 
 
@@ -98,6 +94,12 @@ document.getElementById("habitForm").onsubmit = (event) => {
 
   habits.push(name);
   document.getElementById("habitName").value = "";
+  renderHabits();
+};
+
+document.getElementById("resetBtn").onclick = () => {
+  habits = [];
+  document.getElementById("fruitContainer").innerHTML = "";
   renderHabits();
 };
 
